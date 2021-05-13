@@ -184,9 +184,14 @@ int main(int argc, char* argv[])
 					found_nro = true;
 				}
 				else {
-					int patch = ver_patch;
+					int patch = ver_patch + 1;
 					while(patch--) {
-						snprintf(filename_buff, 255, "%s/godot-%i.%i.%i.nro", getcwd_buff, ver_major, ver_minor, patch);
+						if(patch != 0) {
+							snprintf(filename_buff, 255, "%s/godot-%i.%i.%i.nro", getcwd_buff, ver_major, ver_minor, patch);
+						} 
+						else {
+							snprintf(filename_buff, 255, "%s/godot-%i.%i.nro", getcwd_buff, ver_major, ver_minor);
+						}
 
 						if(file_exists(filename_buff)) {
 							invoke_with_merged_argv(filename_buff, argc, argv);
