@@ -21,12 +21,16 @@ void bail(const char *error)
 {
 	consoleInit(NULL);
 	printf("%s\npress + to exit\n", error);
+	padConfigureInput(1, HidNpadStyleSet_NpadStandard);
+	PadState pad;
+    padInitializeDefault(&pad);
+
     while (appletMainLoop())
     {
-        hidScanInput();
-        u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
+	padUpdate(&pad);
+	u64 kDown = padGetButtonsDown(&pad);
 
-        if (kDown & KEY_PLUS)
+        if (kDown & HidNpadButton_Plus)
             break;
         consoleUpdate(NULL);
     }
